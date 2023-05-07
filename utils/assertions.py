@@ -25,8 +25,12 @@ class Assertions:
     """Метод для проверки значений полей в ответе сервера"""
     @staticmethod
     def check_json_key_value(response: Response, json_key, expected_value):
-        if type(json_key) is float:
-            assert json_key == expected_value
+        if json_key == "location":
+            location = response.json().get(json_key)
+            if location.get("latitude") == "latitude":
+                assert float(location["latitude"]) == expected_value
+            if location.get("longitude") == "longitude":
+                assert float(location["longitude"]) == expected_value
         else:
             checking_value = response.json().get(json_key)
             assert checking_value == expected_value
