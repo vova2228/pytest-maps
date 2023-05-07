@@ -1,10 +1,13 @@
 from utils.http_methods import Http_methods
+from utils.generator import Generator
 
 """Методы для тестирования Google maps api"""
 
 base_url = "https://rahulshettyacademy.com"  # Базовый URL
 key = "?key=qaclick123"  # Ключ query
-
+address = "29, side layout, cohen 09"
+lat, lon = Generator.generate_random_coordinates()
+phone_number = Generator.generate_phone_number()
 
 class Google_maps_api:
     """Метод для создания новой локации"""
@@ -12,13 +15,13 @@ class Google_maps_api:
     def create_new_place():
         post_json_body = {
             "location": {
-                "lat": -38.303494,
-                "lng": 33.427362
+                "lat": lat,
+                "lng": lon
             },
             "accuracy": 50,
             "name": "Frontline house",
-            "phone_number": "(+91) 983 893 3937",
-            "address": "29, side layout, cohen 09",
+            "phone_number": phone_number,
+            "address": address,
             "types": [
                 "shoe park",
                 "shop"
@@ -26,11 +29,12 @@ class Google_maps_api:
             "website": "http://google.com",
             "language": "French-IN"
         }
+
         post_path = "/maps/api/place/add/json"  # Ресурс метода POST
         post_url = base_url + post_path + key
-        print(post_url)
 
         post_response = Http_methods.post(post_url, post_json_body)
+        print(post_url)
         print(post_response.text)
         return post_response
 
