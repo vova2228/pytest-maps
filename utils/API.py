@@ -1,13 +1,16 @@
+from test_data.Test_Data import Test_Data
 from utils.http_methods import Http_methods
-from utils.generator import Generator
 
 """Методы для тестирования Google maps api"""
 
 base_url = "https://rahulshettyacademy.com"  # Базовый URL
 key = "?key=qaclick123"  # Ключ query
-address = "29, side layout, cohen 09"
-lat, lon = Generator.generate_random_coordinates()
-phone_number = Generator.generate_phone_number()
+
+address = Test_Data.address
+new_address = Test_Data.new_address
+lat = Test_Data.lat
+lon = Test_Data.lon
+phone_number = Test_Data.phone_number
 
 class Google_maps_api:
     """Метод для создания новой локации"""
@@ -58,7 +61,7 @@ class Google_maps_api:
 
         put_json_body = {
             "place_id": place_id,
-            "address": "22, side layout, cohen 09 new",
+            "address": new_address,
             "key": "qaclick123"
         }
 

@@ -1,7 +1,5 @@
 """Методы для проверки ответов запросов"""
 import json
-
-import pytest
 from requests import Response
 
 class Assertions:
@@ -27,9 +25,12 @@ class Assertions:
     """Метод для проверки значений полей в ответе сервера"""
     @staticmethod
     def check_json_key_value(response: Response, json_key, expected_value):
-        checking_value = response.json().get(json_key)
-        assert checking_value == expected_value
-        print(f'**{json_key}** содержит верное значение')
+        if type(json_key) is float:
+            assert json_key == expected_value
+        else:
+            checking_value = response.json().get(json_key)
+            assert checking_value == expected_value
+            print(f'**{json_key}** содержит верное значение')
 
 
     """Метод для проверки значений полей в ответе сервера по заданному слову"""
