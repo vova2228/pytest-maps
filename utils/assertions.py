@@ -16,9 +16,9 @@ class Assertions:
     """Метод для проверки наличия полей в ответе сервера"""
 
     @staticmethod
-    def check_json_token(response: Response, expected_value):
-        token = json.loads(response.text)
-        assert list(token) == expected_value
+    def check_json_contains_keys(response: Response, expected_value):
+        keys = json.loads(response.text)
+        assert list(keys) == expected_value
         print("Все ключи присутствуют!")
 
 
