@@ -1,3 +1,4 @@
+import allure
 from requests import Response
 from test_data.Test_Data import Test_Data
 from utils.assertions import Assertions
@@ -11,10 +12,12 @@ lat = Test_Data.lat
 lon = Test_Data.lon
 phone_number = Test_Data.phone_number
 
+
+@allure.epic("Test create new place")
 class Test_create_new_place:
 
+    @allure.description("Test create, update and delete new location")
     def test_create_new_place(self):
-
         print("\n\nМетод POST")
         post_response: Response = Google_maps_api.create_new_place()
         post_response_json = post_response.json()
@@ -26,7 +29,9 @@ class Test_create_new_place:
         print("\nМетод GET после создания новой локации")
         get_response: Response = Google_maps_api.get_new_place(place_id)
         Assertions.check_status_code(get_response, 200)
-        Assertions.check_json_contains_keys(get_response, ['location', 'accuracy', 'name', 'phone_number', 'address', 'types', 'website', 'language'])
+        Assertions.check_json_contains_keys(get_response,
+                                            ['location', 'accuracy', 'name', 'phone_number', 'address', 'types',
+                                             'website', 'language'])
         Assertions.check_json_key_value(get_response, "address", address)
         Assertions.check_json_key_value(get_response, "location", lat)
         Assertions.check_json_key_value(get_response, "location", lon)
@@ -41,7 +46,9 @@ class Test_create_new_place:
         print("\nМетод GET после обновления локации")
         get_response: Response = Google_maps_api.get_new_place(place_id)
         Assertions.check_status_code(get_response, 200)
-        Assertions.check_json_contains_keys(get_response, ['location', 'accuracy', 'name', 'phone_number', 'address', 'types', 'website', 'language'])
+        Assertions.check_json_contains_keys(get_response,
+                                            ['location', 'accuracy', 'name', 'phone_number', 'address', 'types',
+                                             'website', 'language'])
         Assertions.check_json_key_value(get_response, "address", new_address)
         Assertions.check_json_key_value(get_response, "location", lat)
         Assertions.check_json_key_value(get_response, "location", lon)
